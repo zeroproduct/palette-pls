@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import niceColors from 'nice-color-palettes/1000';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { ReactComponent as Logo } from './assets/github-logo.svg';
 import './App.css';
 
 function App() {
@@ -71,6 +72,9 @@ function App() {
             <button onClick={() => handleShareClick()} className="toolbar-button">{shareButtonText}</button>
           </CopyToClipboard>
         </div>
+        <a href="https://github.com/zeroproduct/palette-pls" target="_blank" rel="noopener noreferrer">
+          <Logo className="github" />
+        </a>
       </div>
     </div>
   );
