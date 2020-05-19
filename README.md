@@ -1,2 +1,2 @@
-# 🎨🤲
-Generate random color palettes
+# Palette Pls
+Generate a random color palette based on the top palettes on [ColourLovers.com](http://colourlovers.com/). Copy hex codes by clicking on the hex code text, or share specific palettes by copying a link when pressing Share.
