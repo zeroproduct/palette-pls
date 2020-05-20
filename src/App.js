@@ -72,8 +72,8 @@ function App() {
             <button onClick={() => handleShareClick()} className="toolbar-button">{shareButtonText}</button>
           </CopyToClipboard>
         </div>
-        <a href="https://github.com/zeroproduct/palette-pls" target="_blank" rel="noopener noreferrer">
-          <Logo className="github" />
+        <a className="github" href="https://github.com/zeroproduct/palette-pls" target="_blank" rel="noopener noreferrer">
+          <Logo />
         </a>
       </div>
     </div>

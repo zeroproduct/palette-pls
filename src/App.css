@@ -105,7 +105,11 @@
     width: min-content;
   }
 
-  .toolbar-title {
-    margin-top: 24px;
+  .toolbar {
+    justify-content: start;
+  }
+
+  .github {
+    visibility: hidden;
   }
 }
