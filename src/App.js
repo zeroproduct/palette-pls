@@ -2,7 +2,30 @@ import React, { useState, useEffect } from 'react';
 import niceColors from 'nice-color-palettes/1000';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ReactComponent as Logo } from './assets/github-logo.svg';
+import { Canvas } from 'react-three-fiber'
+import { Physics, usePlane, useBox } from 'use-cannon'
+
 import './App.css';
+
+function Plane(props) {
+  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+  return (
+    <mesh ref={ref} receiveShadow>
+      <planeBufferGeometry attach="geometry" args={[1009, 1000]} />
+      <shadowMaterial attach="material" color="#171717" />
+    </mesh>
+  )
+}
+
+function Cube(props) {
+  const [ref] = useBox(() => ({ mass: 1, position: [0, 5, 0], rotation: [0.4, 0.2, 0.5], ...props }))
+  return (
+    <mesh receiveShadow castShadow ref={ref}>
+      <boxBufferGeometry attach="geometry" />
+      <meshLambertMaterial attach="material" color={props.color} />
+    </mesh>
+  )
+}
 
 function App() {
   const [randomColorIndex, setRandomColorIndex] = useState(null);
@@ -53,11 +76,26 @@ function App() {
     })
   };
 
+  const renderColorBoxes = () => {
+    return randomColors.map((color, i) => {
+      return <Cube position={[(i-2)*2, (i+1)*4, 0]} color={color} />;
+    });
+  };
+
   if (!randomColors) return <div />;
 
   return (
     <div className="app">
-      {renderRandomColors()}
+      {/* {renderRandomColors()} */}
+      <Canvas shadowMap sRGB gl={{ alpha: false }} camera={{ position: [-2, 2, 10], fov: 50 }}>
+        <color attach="background" args={['#555555']} />
+        <hemisphereLight intensity={0.2} />
+        <spotLight position={[10, 10, 10]} angle={0.5} penumbra={1} intensity={1} castShadow />
+        <Physics>
+          <Plane />
+          {renderColorBoxes()}
+        </Physics>
+      </Canvas>
       <div className="toolbar">
         <span className="toolbar-title" role="img" aria-label="palette-pls">🎨🤲</span>
         <div>
