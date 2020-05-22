@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import niceColors from 'nice-color-palettes/1000';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ReactComponent as Logo } from './assets/github-logo.svg';
+
+import PaletteColor from './components/PaletteColor';
 import './App.css';
 
 function App() {
@@ -39,16 +41,16 @@ function App() {
     }, 2400);
   };
 
+  const handleColorEdit = (color, index) => {
+    let newColors = randomColors;
+    newColors[index] = color;
+    setRandomColors(newColors);
+  };
+
   const renderRandomColors = () => {
-    return randomColors.map(color => {
+    return randomColors.map((color, i) => {
       return (
-        <CopyToClipboard key={color} text={color}>
-          <div className="palette-color" style={{ backgroundColor: color }}>
-            <div className="hex-container">
-              <span className="hex">{color}<span className="hex-tooltip">Copy</span></span>
-            </div>
-          </div>
-        </CopyToClipboard>
+        <PaletteColor key={color} color={color} index={i} handleColorEdit={handleColorEdit} />
       );
     })
   };
