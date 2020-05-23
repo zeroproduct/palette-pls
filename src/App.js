@@ -64,7 +64,7 @@ function App() {
           <button className="toolbar-button" onClick={() => randomize()}>Randomize</button>
           <CopyToClipboard 
             text={
-              window.location.href.includes('palette') 
+              window.location.href.includes('?palette') 
                 ? `${window.location.href.split('/?')[0]}/?palette=${(randomColors.join(',')).replace(/#/gi, '')}`
                 : `${window.location.href}?palette=${(randomColors.join(',')).replace(/#/gi, '')}`
             }
