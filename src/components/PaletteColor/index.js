@@ -17,9 +17,12 @@ function PaletteColor({ color, index, handleColorEdit }) {
 
   const handleChangeComplete = color => {
     setPaletteColor(color.hex);
-    handleColorEdit(color.hex, index);
   };
 
+  const handleClickOut = () => {
+    handleColorEdit(paletteColor, index);
+    setDisplayColorPicker(false);
+  };
 
   if (!color) return <div />;
   return (
@@ -31,7 +34,7 @@ function PaletteColor({ color, index, handleColorEdit }) {
         </span>
         {displayColorPicker ? (
           <div className="picker-popover">
-            <div className="picker-cover" onClick={() => setDisplayColorPicker(false)} />
+            <div className="picker-cover" onClick={() => handleClickOut(false)} />
             <ChromePicker
               disableAlpha={true} 
               color={paletteColor}
