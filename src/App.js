@@ -7,15 +7,14 @@ import PaletteColor from './components/PaletteColor';
 import './App.css';
 
 function App() {
-  const [randomColorIndex, setRandomColorIndex] = useState(null);
   const [randomColors, setRandomColors] = useState(null);
   const [shareButtonText, setShareButtonText] = useState('Share');
 
   useEffect(() => {
-    let paletteIndex = getURLParams();
-    if (paletteIndex) {
-      setRandomColorIndex(paletteIndex);
-      setRandomColors(niceColors[paletteIndex]);
+    let queriedPalette = getURLParams();
+    if (queriedPalette) {
+      let queriedColors = (queriedPalette.split(',')).map(color => `#${color}`);
+      setRandomColors(queriedColors);
     } else {
       randomize();
     }
@@ -30,7 +29,6 @@ function App() {
 
   const randomize = () => {
     let index = Math.floor(Math.random() * niceColors.length);
-    setRandomColorIndex(index);
     setRandomColors(niceColors[index]);
   };
 
@@ -44,13 +42,13 @@ function App() {
   const handleColorEdit = (color, index) => {
     let newColors = randomColors;
     newColors[index] = color;
-    setRandomColors(newColors);
+    setRandomColors([...newColors]);
   };
 
   const renderRandomColors = () => {
     return randomColors.map((color, i) => {
       return (
-        <PaletteColor key={color} color={color} index={i} handleColorEdit={handleColorEdit} />
+        <PaletteColor key={`${i}${color}`} color={color} index={i} handleColorEdit={handleColorEdit} />
       );
     })
   };
@@ -67,8 +65,8 @@ function App() {
           <CopyToClipboard 
             text={
               window.location.href.includes('palette') 
-                ? `${window.location.href.split('/?')[0]}/?palette=${randomColorIndex}`
-                : `${window.location.href}?palette=${randomColorIndex}`
+                ? `${window.location.href.split('/?')[0]}/?palette=${(randomColors.join(',')).replace(/#/gi, '')}`
+                : `${window.location.href}?palette=${(randomColors.join(',')).replace(/#/gi, '')}`
             }
           >
             <button onClick={() => handleShareClick()} className="toolbar-button">{shareButtonText}</button>

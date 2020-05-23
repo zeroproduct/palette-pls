@@ -16,7 +16,7 @@ function PaletteColor({ color, index, handleColorEdit }) {
   };
 
   const handleChangeComplete = color => {
-    setDisplayColorPicker(color.hex)
+    setPaletteColor(color.hex);
     handleColorEdit(color.hex, index);
   };
 
